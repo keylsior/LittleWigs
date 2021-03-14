@@ -161,7 +161,7 @@ end
 do
 	local prev = 0
 	function mod:DeadlyThrust(args)
-		self:NameplateCDBar(args.spellId, 10, args.sourceGUID)
+		self:NameplateCDBar(args.spellId, 9, args.sourceGUID)
 		local t = args.time
 		if t - prev > 1.5 then
 			prev = t
