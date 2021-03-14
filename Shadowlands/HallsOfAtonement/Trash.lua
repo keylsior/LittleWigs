@@ -151,7 +151,6 @@ end
 -- Loyal Stoneborn
 function mod:StoneBreath(args)
 	if bit.band(args.sourceFlags, 0x10) ~= 0 then return end -- COMBATLOG_OBJECT_REACTION_FRIENDLY
-
 	self:NameplateBar(args.spellId, 17, args.sourceGUID)
 	self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "alarm")
