@@ -50,15 +50,15 @@ function mod:GetOptions()
 	return {
 		326450, -- Loyal Beasts
 		325799, -- Rapid Fire
-		344993, -- Jagged Swipe
-		346866, -- Stone Breath
-		{325523, "TANK"}, -- Deadly Thrust
+		{344993, "NAMEPLATEBAR"}, -- Jagged Swipe
+		{346866, "NAMEPLATEBAR"}, -- Stone Breath
+		{325523, "TANK", "NAMEPLATEBAR"}, -- Deadly Thrust
 		{325876, "SAY", "SAY_COUNTDOWN"}, -- Curse of Obliteration
-		325700, -- Collect Sins
+		{325700, "NAMEPLATEBAR"}, -- Collect Sins
 		325701, -- Siphon Life
-		326409, -- Thrash
-		326607, -- Turn to Stone
-		{326997, "TANK"}, -- Powerful Swipe
+		{326409, "NAMEPLATEBAR"}, -- Thrash
+		{326607, "NAMEPLATEBAR"}, -- Turn to Stone
+		{326997, "TANK", "NAMEPLATEBAR"}, -- Powerful Swipe
 		326891, -- Anguish
 	}, {
 		[326450] = L.houndmaster,
