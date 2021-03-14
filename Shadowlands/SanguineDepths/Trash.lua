@@ -144,11 +144,13 @@ function mod:CraggyFracture(args)
 end
 
 function mod:SeveringSlice(args)
+	self:NameplateCDBar(args.spellId, 20, args.sourceGUID)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
 end
 
 function mod:Stoneskin(args)
+	self:NameplateCDBar(args.spellId, 27, args.sourceGUID)
 	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "alert")
 end
@@ -163,6 +165,7 @@ end
 -- Depths Warden
 
 function mod:BarbedShackles(args)
+	self:NameplateCDBar(args.spellId, 11, args.sourceGUID)
 	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "alert")
 end
@@ -182,6 +185,7 @@ end
 do
 	local prev = 0
 	function mod:VolatileTrap(args)
+		self:NameplateCDBar(args.spellId, 15, args.sourceGUID)
 		local t = args.time
 		if t-prev > 1.5 then
 			prev = t
@@ -201,6 +205,12 @@ end
 function mod:ShiningRadiance(args)
 	self:Message(args.spellId, "green")
 	self:PlaySound(args.spellId, "info")
+end
+
+function mod:BlinkStep(args)
+	self:NameplateCDBar(args.spellId, 19, args.sourceGUID)
+	self:Message(args.spellId, "blue")
+	self:PlaySound(args.spellId, "alarm")
 end
 
 -- Grand Overseer
@@ -232,6 +242,7 @@ end
 -- Insatiable Brute
 
 function mod:Slam(args)
+	self:NameplateBar(args.spellId, 13, args.sourceGUID)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 end
@@ -246,6 +257,7 @@ end
 do
 	local prev = 0
 	function mod:EchoingThrust(args)
+		self:NameplateBar(args.spellId, 8, args.sourceGUID)
 		local t = args.time
 		if t-prev > 1.5 then
 			prev = t
