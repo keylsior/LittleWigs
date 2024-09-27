@@ -51,26 +51,27 @@ function mod:GetOptions()
 		341321, -- Summon Anima Collector Stalker
 		-- Chamber Sentinel
 		328170, -- Craggy Fracture
-		322429, -- Severing Slice
-		322433, -- Stoneskin
+		{322429, "TANK", "NAMEPLATEBAR"}, -- Severing Slice
+		{322433, "NAMEPLATEBAR"}, -- Stoneskin
 		-- Depths Warden
-		335305, -- Barbed Shackles
+		{335305, "NAMEPLATEBAR"}, -- Barbed Shackles
 		{335308, "TANK_HEALER"}, -- Crushing Strike
 		-- Dreadful Huntmaster
-		334558, -- Volatile Trap
+		{334558, "NAMEPLATEBAR"}, -- Volatile Trap
 		-- General Kaal
 		324103, -- Gloom Squall
 		324086, -- Shining Radiance
+		{327811, "NAMEPLATEBAR"}, -- Blink Step
 		-- Grand Overseer
 		326827, -- Dread Bindings
 		-- Head Custodian Javlin
 		334329, -- Sweeping Slash
 		{334326, "TANK_HEALER"}, -- Bludgeoning Bash
 		-- Insatiable Brute
-		{321178, "TANK_HEALER"}, -- Slam
+		{321178, "TANK_HEALER", "NAMEPLATEBAR"}, -- Slam
 		334918, -- Umbral Crash
 		-- Regal Mistdancer
-		320991, -- Echoing Thrust
+		{320991, "NAMEPLATEBAR"}, -- Echoing Thrust
 		-- Research Scribe
 		334377, -- Explosive Vellum
 		-- Wicked Oppressor
@@ -107,6 +108,7 @@ function mod:OnBossEnable()
 		-- General Kaal
 		self:Log("SPELL_CAST_START", "GloomSquall", 324103) -- Gloom Squall
 		self:Log("SPELL_CAST_SUCCESS", "ShiningRadiance", 324086) -- Shining Radiance
+		self:Log("SPELL_CAST_SUCCESS", "ShiningRadiance", 327811) -- Blink Step
 		-- Grand Overseer
 		self:Log("SPELL_CAST_START", "DreadBindings", 326827) -- Dread Bindings
 		self:Log("SPELL_AURA_REMOVED", "DreadBindingsRemoved", 326827)
@@ -144,11 +146,13 @@ function mod:CraggyFracture(args)
 end
 
 function mod:SeveringSlice(args)
+	self:NameplateCDBar(args.spellId, 20, args.sourceGUID)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
 end
 
 function mod:Stoneskin(args)
+	self:NameplateCDBar(args.spellId, 27, args.sourceGUID)
 	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "alert")
 end
@@ -163,6 +167,7 @@ end
 -- Depths Warden
 
 function mod:BarbedShackles(args)
+	self:NameplateCDBar(args.spellId, 11, args.sourceGUID)
 	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "alert")
 end
@@ -182,6 +187,7 @@ end
 do
 	local prev = 0
 	function mod:VolatileTrap(args)
+		self:NameplateCDBar(args.spellId, 15, args.sourceGUID)
 		local t = args.time
 		if t-prev > 1.5 then
 			prev = t
@@ -201,6 +207,12 @@ end
 function mod:ShiningRadiance(args)
 	self:Message(args.spellId, "green")
 	self:PlaySound(args.spellId, "info")
+end
+
+function mod:BlinkStep(args)
+	self:NameplateCDBar(args.spellId, 19, args.sourceGUID)
+	self:Message(args.spellId, "blue")
+	self:PlaySound(args.spellId, "alarm")
 end
 
 -- Grand Overseer
@@ -232,6 +244,7 @@ end
 -- Insatiable Brute
 
 function mod:Slam(args)
+	self:NameplateBar(args.spellId, 13, args.sourceGUID)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 end
@@ -246,6 +259,7 @@ end
 do
 	local prev = 0
 	function mod:EchoingThrust(args)
+		self:NameplateBar(args.spellId, 8, args.sourceGUID)
 		local t = args.time
 		if t-prev > 1.5 then
 			prev = t

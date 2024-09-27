@@ -14,8 +14,8 @@ mod:RegisterEnableMob(
 	164562, -- Depraved Houndmaster
 	164563, -- Vicious Gargon
 	174175, -- Loyal Stoneborn
-	165515, -- Depraved Darkblade
-	167615, -- Depraved Darkblade
+	165515, -- Depraved Darkblade outdoor
+	167615, -- Depraved Darkblade indoor
 	165414, -- Depraved Obliterator
 	165529, -- Depraved Collector
 	164557, -- Shard of Halkias
@@ -50,15 +50,15 @@ function mod:GetOptions()
 	return {
 		326450, -- Loyal Beasts
 		325799, -- Rapid Fire
-		344993, -- Jagged Swipe
-		346866, -- Stone Breath
-		{325523, "TANK"}, -- Deadly Thrust
+		{344993, "NAMEPLATEBAR"}, -- Jagged Swipe
+		{346866, "NAMEPLATEBAR"}, -- Stone Breath
+		{325523, "TANK", "NAMEPLATEBAR"}, -- Deadly Thrust
 		{325876, "SAY", "SAY_COUNTDOWN"}, -- Curse of Obliteration
-		325700, -- Collect Sins
+		{325700, "NAMEPLATEBAR"}, -- Collect Sins
 		325701, -- Siphon Life
-		326409, -- Thrash
-		326607, -- Turn to Stone
-		{326997, "TANK"}, -- Powerful Swipe
+		{326409, "NAMEPLATEBAR"}, -- Thrash
+		{326607, "NAMEPLATEBAR"}, -- Turn to Stone
+		{326997, "TANK", "NAMEPLATEBAR"}, -- Powerful Swipe
 		326891, -- Anguish
 	}, {
 		[326450] = L.houndmaster,
@@ -140,6 +140,7 @@ end
 
 -- Vicious Gargon
 function mod:JaggedSwipe(args)
+	self:NameplateCDBar(args.spellId, 6, args.sourceGUID)
 	local stacks = args.amount
 	if self:Me(args.destGUID) and stacks % 3 == 0 then
 		self:StackMessage(args.spellId, args.destName, stacks, "blue")
@@ -150,7 +151,7 @@ end
 -- Loyal Stoneborn
 function mod:StoneBreath(args)
 	if bit.band(args.sourceFlags, 0x10) ~= 0 then return end -- COMBATLOG_OBJECT_REACTION_FRIENDLY
-
+	self:NameplateBar(args.spellId, 17, args.sourceGUID)
 	self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "alarm")
 end
@@ -159,6 +160,7 @@ end
 do
 	local prev = 0
 	function mod:DeadlyThrust(args)
+		self:NameplateCDBar(args.spellId, 9, args.sourceGUID)
 		local t = args.time
 		if t - prev > 1.5 then
 			prev = t
@@ -204,6 +206,7 @@ end
 
 -- Depraved Collector
 function mod:CollectSins(args)
+	self:NameplateCDBar(args.spellId, 10, args.sourceGUID)
 	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "alert")
 end
@@ -215,6 +218,7 @@ end
 
 -- Shard of Halkias
 function mod:ThrashPreCast(args)
+	self:NameplateBar(args.spellId, 23, args.sourceGUID)
 	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 2)
 	self:PlaySound(args.spellId, "warning")
@@ -230,12 +234,14 @@ end
 
 -- Stoneborn Reaver
 function mod:TurnToStone(args)
+	self:NameplateBar(args.spellId, 26, args.sourceGUID)
 	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, self:Interrupter() and "warning" or "alert")
 end
 
 -- Stoneborn Slasher
 function mod:PowerfulSwipe(args)
+	self:NameplateBar(args.spellId, 17, args.sourceGUID)
 	self:Message(args.spellId, "purple", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "alert")
 end
